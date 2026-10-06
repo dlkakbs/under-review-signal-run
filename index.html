@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050706" />
+    <meta
+      name="description"
+      content="UNDER REVIEW is an unofficial, privacy-themed community mini game."
+    />
+    <title>UNDER REVIEW // Signal Run</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#game">Skip to game</a>
+
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="shell">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="Under Review home">
+          <span class="wordmark-mark" aria-hidden="true">◫</span>
+          <span>UNDER/REVIEW</span>
+        </a>
+        <div class="topbar-meta">
+          <span>COMMUNITY SIGNAL</span>
+          <span class="online"><i></i> NODE ONLINE</span>
+        </div>
+      </header>
+
+      <main id="game" class="game-layout">
+        <section class="game-frame" aria-labelledby="game-title">
+          <div class="game-head">
+            <div>
+              <p class="eyebrow">QUEUE INTERCEPT // 01</p>
+              <h1 id="game-title">Signal Run</h1>
+            </div>
+            <div class="status-chip">
+              <span>APPLICATION</span>
+              <strong id="application-status">UNDER REVIEW</strong>
+            </div>
+          </div>
+
+          <div class="canvas-wrap">
+            <canvas
+              id="game-canvas"
+              width="960"
+              height="540"
+              aria-label="Top-down signal collection game. Move with arrow keys or WASD. Hold Space to reveal and collect proof fragments while avoiding scanner cones."
+            ></canvas>
+
+            <div id="intro" class="overlay overlay-visible">
+              <div class="terminal-card">
+                <p class="terminal-line">root@queue:~$ ./review-status</p>
+                <p class="terminal-response">STATUS: <span>UNDER REVIEW_</span></p>
+                <h2>Still pending.<br />Privacy in motion.</h2>
+                <p class="lede">
+                  You are invisible while shielded. Hold <kbd>SPACE</kbd> or
+                  <strong>REVEAL</strong> to materialize and collect 7 proof fragments.
+                  Reveal drains your shield. Red scanners track visible identities and
+                  unstable fragments are decoys.
+                </p>
+                <div class="instruction-grid" aria-label="Game controls">
+                  <div><span>MOVE</span><strong>WASD / ARROWS</strong></div>
+                  <div><span>SELECTIVE REVEAL</span><strong>HOLD SPACE</strong></div>
+                  <div><span>RECHARGE</span><strong>RELEASE + STAY SHIELDED</strong></div>
+                  <div><span>OBJECTIVE</span><strong>7 REAL PROOFS · 45 SEC</strong></div>
+                </div>
+                <button id="start-button" class="primary-button">[ ENTER THE QUEUE ]</button>
+                <p class="microcopy">No wallet. No login. No application data leaves this page.</p>
+              </div>
+            </div>
+
+            <div id="result" class="overlay result-overlay" aria-live="polite">
+              <div class="result-shell">
+                <canvas id="result-card" width="600" height="600" aria-label="Your generated signal identity card"></canvas>
+                <div class="result-copy">
+                  <p class="eyebrow" id="result-kicker">TRANSMISSION COMPLETE</p>
+                  <h2 id="result-title">Signal assembled.</h2>
+                  <p id="result-message"></p>
+                  <dl class="result-stats">
+                    <div><dt>PROOFS</dt><dd id="result-proofs">7/7</dd></div>
+                    <div><dt>EXPOSURE</dt><dd id="result-exposure">0%</dd></div>
+                    <div><dt>SCORE</dt><dd id="result-score">0000</dd></div>
+                  </dl>
+                  <div class="result-actions">
+                    <button id="download-button" class="primary-button">[ DOWNLOAD IDENTITY ]</button>
+                    <button id="copy-button" class="ghost-button">[ COPY RESULT ]</button>
+                    <button id="retry-button" class="text-button">RUN AGAIN ↻</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="toast" class="game-toast" aria-live="assertive"></div>
+          </div>
+
+          <div class="hud" aria-label="Current run status">
+            <div class="hud-item hud-proof">
+              <span>PROOF FRAGMENTS</span>
+              <strong><b id="fragment-count">0</b>/7</strong>
+              <em id="stage-value">STAGE 1</em>
+            </div>
+            <div class="hud-item hud-shield">
+              <span>SHIELD ENERGY</span>
+              <div class="meter" aria-hidden="true"><i id="shield-fill"></i></div>
+              <strong id="shield-value">100%</strong>
+            </div>
+            <div class="hud-item hud-exposure">
+              <span>EXPOSURE</span>
+              <div class="meter" aria-hidden="true"><i id="exposure-fill"></i></div>
+              <strong id="exposure-value">0%</strong>
+            </div>
+            <div class="hud-item hud-time">
+              <span>WINDOW</span>
+              <strong id="time-value">45.0</strong>
+            </div>
+          </div>
+
+          <div class="mobile-controls" aria-label="Touch controls">
+            <div class="dpad">
+              <button data-direction="up" aria-label="Move up">↑</button>
+              <button data-direction="left" aria-label="Move left">←</button>
+              <button data-direction="down" aria-label="Move down">↓</button>
+              <button data-direction="right" aria-label="Move right">→</button>
+            </div>
+            <button id="reveal-button" class="reveal-button">HOLD<br />REVEAL</button>
+          </div>
+        </section>
+
+        <aside class="side-panel" aria-label="Signal log">
+          <div class="panel-block">
+            <p class="eyebrow">LIVE LOG</p>
+            <ul id="signal-log" class="signal-log">
+              <li><time>00:00</time><span>shielded session opened</span></li>
+              <li><time>00:01</time><span>identity: encrypted</span></li>
+              <li><time>00:02</time><span>standing: pending</span></li>
+            </ul>
+          </div>
+
+          <div class="panel-block manifesto-block">
+            <p class="eyebrow">FIELD NOTE</p>
+            <blockquote>
+              Privacy is the power to selectively reveal oneself to the world.
+            </blockquote>
+            <cite>— Eric Hughes, 1993</cite>
+          </div>
+
+          <div class="panel-block legend-block">
+            <p class="eyebrow">SIGNAL KEY</p>
+            <div><i class="key-fragment"></i><span>proof fragment</span></div>
+            <div><i class="key-decoy"></i><span>unstable decoy</span></div>
+            <div><i class="key-scanner"></i><span>scanner field</span></div>
+            <div><i class="key-safe"></i><span>shielded recharge zone</span></div>
+            <div><i class="key-shield"></i><span>shielded identity</span></div>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <span>UNOFFICIAL COMMUNITY GAME CONCEPT</span>
+        <span>BUILT FOR THE PEOPLE STILL REFRESHING_</span>
+      </footer>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
